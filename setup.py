@@ -7,7 +7,7 @@ from distutils.command.install import INSTALL_SCHEMES
 for scheme in INSTALL_SCHEMES.values():
     scheme['data'] = scheme['purelib']
 
-# Dynamically calculate the version based on tagging.VERSION.
+# Dynamically calculate the version based on VERSION.
 version_tuple = __import__('voting').VERSION
 if version_tuple[2] is not None:
     version = "%d.%d_%s" % version_tuple
@@ -15,7 +15,7 @@ else:
     version = "%d.%d" % version_tuple[:2]
 
 setup(
-    name = 'django-voting',
+    name = 'teknolab-django-voting',
     version = version,
     description = 'Generic voting application for Django',
     author = 'Jonathan Buchanan',
