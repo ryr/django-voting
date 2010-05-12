@@ -24,7 +24,7 @@ def vote_on_object(request, direction, model=None, content_type_id=None,
     return _vote_on_object(request, model, direction, post_vote_redirect=None,
                            object_id=None, slug=None, slug_field=None, template_name=None,
                            template_loader=loader, extra_context=None, context_processors=None,
-                           template_object_name='object', allow_xmlhttprequest=False)
+                           template_object_name='object', allow_xmlhttprequest=allow_xmlhttprequest)
 
 def _vote_on_object(request, model, direction, post_vote_redirect=None,
         object_id=None, slug=None, slug_field=None, template_name=None,
