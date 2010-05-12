@@ -20,7 +20,7 @@ def vote_on_object(request, direction, model=None, content_type_id=None,
     from content_type_id if model is not given
     """
     if not model:
-        model = ContentType.objects.get_for_id(content_type_id)
+        model = ContentType.objects.get_for_id(content_type_id).model_class()
     return _vote_on_object(request, model, direction, post_vote_redirect=post_vote_redirect,
                            object_id=object_id, slug=slug, slug_field=slug_field, template_name=template_name,
                            template_loader=loader, extra_context=extra_context, context_processors=context_processors,
