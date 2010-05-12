@@ -21,9 +21,9 @@ def vote_on_object(request, direction, model=None, content_type_id=None,
     """
     if not model:
         model = ContentType.objects.get_for_id(content_type_id)
-    return _vote_on_object(request, model, direction, post_vote_redirect=None,
-                           object_id=None, slug=None, slug_field=None, template_name=None,
-                           template_loader=loader, extra_context=None, context_processors=None,
+    return _vote_on_object(request, model, direction, post_vote_redirect=post_vote_redirect,
+                           object_id=object_id, slug=slug, slug_field=slug_field, template_name=template_name,
+                           template_loader=loader, extra_context=extra_context, context_processors=context_processors,
                            template_object_name='object', allow_xmlhttprequest=allow_xmlhttprequest)
 
 def _vote_on_object(request, model, direction, post_vote_redirect=None,
