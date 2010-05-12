@@ -232,6 +232,7 @@ def vote_display(vote, arg=None):
 register.filter(vote_display)
 
 
+@register.filter
 def type_id(obj):
 	"""
 	Return the content_type_id of the given object
@@ -240,7 +241,5 @@ def type_id(obj):
 
         {{ question|type_id }}
 	"""
-	return getattr(ContentType.objects.get_for_model(obj), 'id')
-
-register.filter(name='type_id')
+	return 
 
