@@ -1,5 +1,6 @@
 from django import template
 from django.utils.html import escape
+from django.contrib.contenttypes.models import ContentType
 
 from voting.models import Vote
 
