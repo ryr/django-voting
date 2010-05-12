@@ -9,7 +9,24 @@ from voting.models import Vote
 
 VOTE_DIRECTIONS = (('up', 1), ('down', -1), ('clear', 0))
 
-def vote_on_object(request, model, direction, post_vote_redirect=None,
+
+def vote_on_object(request, direction, model=None, content_type_id=None,
+                   post_vote_redirect=None, object_id=None, slug=None, 
+                   slug_field=None, template_name=None, template_loader=loader, 
+                   extra_context=None, context_processors=None,
+                   template_object_name='object', allow_xmlhttprequest=False):
+    """
+    A wrapper around the original vote_on_object to allow fetching model 
+    from content_type_id if model is not given
+    """
+    if not model:
+        model = ContentType.objects.get_for_id(content_type_id)
+    return _vote_on_object(request, model, direction, post_vote_redirect=None,
+                           object_id=None, slug=None, slug_field=None, template_name=None,
+                           template_loader=loader, extra_context=None, context_processors=None,
+                           template_object_name='object', allow_xmlhttprequest=False)
+
+def _vote_on_object(request, model, direction, post_vote_redirect=None,
         object_id=None, slug=None, slug_field=None, template_name=None,
         template_loader=loader, extra_context=None, context_processors=None,
         template_object_name='object', allow_xmlhttprequest=False):
