@@ -241,5 +241,5 @@ def type_id(obj):
 
         {{ question|type_id }}
 	"""
-	return 
+	return getattr(ContentType.objects.get_for_model(obj), 'id')
 
