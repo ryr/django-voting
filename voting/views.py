@@ -23,10 +23,10 @@ def vote_on_object(request, direction=None, model=None, content_type_id=None,
     if not direction:
         direction = request.POST.get('direction')
     if not object_id:
-        object_id = request.POST.get('object_id')
+        object_id = int(request.POST.get('object_id'))
     if not model:
         if not content_type_id:
-            content_type_id = request.POST.get('content_type_id')
+            content_type_id = int(request.POST.get('content_type_id'))
         model = ContentType.objects.get_for_id(content_type_id).model_class()
     return _vote_on_object(request, model, direction, post_vote_redirect=post_vote_redirect,
                            object_id=object_id, slug=slug, slug_field=slug_field, template_name=template_name,
