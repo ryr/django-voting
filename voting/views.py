@@ -4,13 +4,12 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.views import redirect_to_login
 from django.template import loader, RequestContext
 from django.utils import simplejson
-
 from voting.models import Vote
 
 VOTE_DIRECTIONS = (('up', 1), ('down', -1), ('clear', 0))
 
 
-def vote_on_object(request, direction, model=None, content_type_id=None,
+def vote_on_object(request, direction=None, model=None, content_type_id=None,
                    post_vote_redirect=None, object_id=None, slug=None, 
                    slug_field=None, template_name=None, template_loader=loader, 
                    extra_context=None, context_processors=None,
@@ -18,8 +17,16 @@ def vote_on_object(request, direction, model=None, content_type_id=None,
     """
     A wrapper around the original vote_on_object to allow fetching model 
     from content_type_id if model is not given
+    Also allows POSTing direction, content_type_id and object_id parameters
+    instead of supplying from within the request URL.
     """
+    if not direction:
+        direction = request.POST.get('direction')
+    if not object_id:
+        object_id = request.POST.get('object_id')
     if not model:
+        if not content_type_id:
+            content_type_id = request.POST.get('content_type_id')
         model = ContentType.objects.get_for_id(content_type_id).model_class()
     return _vote_on_object(request, model, direction, post_vote_redirect=post_vote_redirect,
                            object_id=object_id, slug=slug, slug_field=slug_field, template_name=template_name,
