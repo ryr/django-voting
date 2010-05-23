@@ -1,6 +1,6 @@
 from django.conf import settings
 from reputation.handlers import BaseReputationHandler
-from reputation import reputation_registery
+from reputation.registry import reputation_registery
 
 
 class VotingVoteReputationHandler(BaseReputationHandler):
