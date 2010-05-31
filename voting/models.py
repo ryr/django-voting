@@ -24,8 +24,9 @@ class Vote(models.Model):
 
     class Meta:
         db_table = 'votes'
-        # One vote per user per object
         unique_together = (('user', 'content_type', 'object_id'),)
+        permissions = (('can_vote_up', 'Can vote up'),
+                       ('can_vote_down', 'Can vote down'))
 
     def __unicode__(self):
         return u'%s: %s on %s' % (self.user, self.vote, self.object)
@@ -35,3 +36,29 @@ class Vote(models.Model):
 
     def is_downvote(self):
         return self.vote == -1
+
+
+class VotingReputationHandler(BaseReputationHandler):
+    model = Vote
+    UP_VALUE = 15
+    DOWN_VALUE = -5
+
+    def check_conditions(self, instance):
+        return True
+    
+    def get_target_object(self, instance):
+        return instance.object
+    
+    def get_target_user(self, instance):
+        return getattr(instance.object, 'user', None)
+    
+    def get_originating_user(self, instance):
+        return getattr(instance, 'user', None)
+            
+    def get_value(self, instance):
+        value = 0
+        if instance.vote == 1:
+            value = self.UP_VALUE
+        elif instance.vote == -1:
+            value = self.DOWN_VALUE
+        return value
