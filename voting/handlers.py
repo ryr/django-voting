@@ -1,5 +1,5 @@
 from reputation.handlers import BaseReputationHandler
-from voting.handlers import VotingReputationHandler
+from voting.models import Vote
 
 
 class VotingReputationHandler(BaseReputationHandler):
