@@ -5,20 +5,13 @@ from django.db import models
 from reputation.handlers import BaseReputationHandler
 from voting.managers import VoteManager
 
-SCORES = (
-    (u'+1', +1),
-    (u'-1', -1),
-)
 
 class Vote(models.Model):
-    """
-    A vote on an object by a User.
-    """
-    user         = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     content_type = models.ForeignKey(ContentType)
-    object_id    = models.PositiveIntegerField()
-    object       = generic.GenericForeignKey('content_type', 'object_id')
-    vote         = models.SmallIntegerField(choices=SCORES)
+    object_id = models.PositiveIntegerField()
+    object = generic.GenericForeignKey('content_type', 'object_id')
+    vote = models.SmallIntegerField(choices=((1, 1), (-1, -1)))
 
     objects = VoteManager()
 
