@@ -5,17 +5,17 @@ from django.contrib.auth.views import redirect_to_login
 from django.template import loader, RequestContext
 from django.utils import simplejson
 from django.conf import settings
-from reputation.decorators import reputation_required
+from django.contrib.auth.decorators import permission_required
 from voting.models import Vote
 
 VOTE_DIRECTIONS = (('up', 1), ('down', -1), ('clear', 0))
 
-@reputation_required('can_vote_up')
+@permission_required('voting.can_vote_up')
 def vote_up(*args, **kwargs):
     kwargs['direction'] = 'up'
     return vote_on_object(*args, **kwargs)
 
-@reputation_required('can_vote_down')
+@permission_required('voting.can_vote_down')
 def vote_down(*args, **kwargs):
     kwargs['direction'] = 'down'
     return vote_on_object(*args, **kwargs)
